@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WePink | Inovação em Beleza</title>
+    <style>
+        /* Configurações Globais e Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --pink-primary: #ff85a2;
+            --pink-dark: #f25c74;
+            --pink-light: #fbc4d0;
+            --bg-dark: #0b0708;
+            --text-light: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Fundo Dinâmico (Animação de Brilho) */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,133,162,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            right: -200px;
+            z-index: -1;
+            animation: floatGlow 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, 100px); }
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(11, 7, 8, 0.7);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--pink-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--pink-primary);
+        }
+
+        /* Seção Hero (Destaque Principal) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(45deg, var(--pink-primary), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--pink-primary), var(--pink-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 133, 162, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 133, 162, 0.5);
+        }
+
+        /* Vitrine Interativa (Cards de Produtos) */
+        .products-section {
+            padding: 100px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            color: var(--pink-primary);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--pink-primary);
+        }
+
+        /* Placeholder visual para simular o frasco do produto */
+        .product-visual {
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255,133,162,0.2), rgba(255,255,255,0.05));
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-visual {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .product-name {
+            font-size: 20px;
+            margin-bottom: 100px; /* Espaço para o rodapé do card fixo */
+        }
+
+        /* Área de compra interna do card */
+        .card-footer {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            right: 25px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: var(--pink-light);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .btn-buy {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--pink-primary);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: var(--pink-primary);
+            color: var(--bg-dark);
+        }
+
+        /* Notificação Flutuante (Feedback do Script) */
+        .notification {
+            position: fixed;
+            bottom: -100px;
+            right: 30px;
+            background: linear-gradient(45deg, #2b2b2b, #1a1a1a);
+            border-left: 4px solid var(--pink-primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+
+        .notification.show {
+            bottom: 30px;
+        }
+
+        /* Responsividade Básica */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 42px; }
+            .nav-links { display: none; } /* Simplificado para o exemplo */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav>
+        <div class="logo">WE<span>PINK</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#inovacao">Tecnologia</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>A Revolução da sua <span>Pele</span> Começa Aqui.</h1>
+            <p>Fórmulas de alta performance que combinam alta tecnologia, sofisticação e a essência da beleza marcante. Sinta o efeito WePink.</p>
+            <a href="#produtos" class="btn-main">Explorar Fórmulas</a>
+        </div>
+    </section>
+
+    <section class="products-section" id="produtos">
+        <h2 class="section-title">Nossos <span>Best Sellers</span></h2>
+        
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-visual">✨</div>
+                <h3 class="product-name">Sérum Facial 10 em 1</h3>
+                <div class="card-footer">
+                    <p class="product-price">R$ 149,90</p>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Sérum Facial 10 em 1')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-visual">🌸</div>
+                <h3 class="product-name">Perfume VF Essencial</h3>
+                <div class="card-footer">
+                    <p class="product-price">R$ 229,90</p>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Perfume VF Essencial')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-visual">💧</div>
+                <h3 class="product-name">Body Splash Infinity</h3>
+                <div class="card-footer">
+                    <p class="product-price">R$ 99,90</p>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Body Splash Infinity')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="notification" id="cart-notification">
+        <span style="font-size: 20px;">🛒</span>
+        <span id="notification-text">Produto adicionado!</span>
+    </div>
+
+    <script>
+        // Função interativa para simulação de e-commerce com feedback visual
+        function adicionarAoCarrinho(nomeProduto) {
+            const notificacao = document.getElementById('cart-notification');
+            const textoNotificacao = document.getElementById('notification-text');
+            
+            // Define o texto personalizado
+            textoNotificacao.innerText = `${nomeProduto} foi adicionado à sua sacola!`;
+            
+            // Exibe a notificação com animação
+            notificacao.classList.add('show');
+            
+            // Oculta após 3 segundos
+            setTimeout(() => {
+                notificacao.classList.remove('show');
+            }, 3000);
+        }
+
+        // Efeito sutil de rotação nos cards baseado no movimento do mouse (Inovação Visual)
+        const cards = document.querySelectorAll('.product-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width/2);
+                const y = e.clientY - rect.top - (rect.height/2);
+                
+                // Rotaciona levemente o card acompanhando o mouse
+                card.style.transform = `translateY(-10px) rotateX(${-y / 15}deg) rotateY(${x / 15}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                // Reseta a posição padrão
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
